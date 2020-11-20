@@ -2,7 +2,6 @@ package main
 
 import "testing"
 
-
 func TestIsLeap2000Year(t *testing.T) {
 	b := IsLeapYear(2000)
 	if !b {
@@ -31,9 +30,37 @@ func TestIsLeap2016Year(t *testing.T) {
 	}
 }
 
-func TestIsNotLeap1580Year(t *testing.T) {
-	b := IsLeapYear(1580)
-	if b {
-		t.Error("Year 1580 is before a Grigorian calendar")
+func Test1580IsNotGrigorian(t *testing.T) {
+	_, err := TryIsLeapYear(1580)
+	if err != ErrYearNotGrigorian {
+		t.Error("1580 is not a Grigorian year")
+	}
+}
+
+func Test1581IsGrigorian(t *testing.T) {
+	_, err := TryIsLeapYear(1581)
+	if err != ErrYearNotGrigorian {
+		t.Error("1581 is not a Grigorian year")
+	}
+}
+
+func Test2020IsGrigorian(t *testing.T) {
+	_, err := TryIsLeapYear(2020)
+	if err == ErrYearNotGrigorian {
+		t.Error("2020 is a Grigorian year")
+	}
+}
+
+func Test2020IsLeap(t *testing.T) {
+	b, _ := TryIsLeapYear(2020)
+	if !b {
+		t.Error("2020 should be Leap year")
+	}
+}
+
+func Test2016IsLeap(t *testing.T) {
+	b, _ := TryIsLeapYear(2016)
+	if !b {
+		t.Error("2016 should be Leap year")
 	}
 }
