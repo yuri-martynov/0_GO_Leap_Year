@@ -64,3 +64,39 @@ func Test2016IsLeap(t *testing.T) {
 		t.Error("2016 should be Leap year")
 	}
 }
+
+func Test2015IsGrigorianYear(t *testing.T) {
+	b := isGrigorianYear(2015)
+	if !b {
+		t.Error("2015 is not GrigorianYear")
+	}
+}
+
+func Test2017IsGrigorianYear(t *testing.T) {
+	b := isGrigorianYear(2017)
+	if !b {
+		t.Error("2017 is not GrigorianYear")
+	}
+}
+
+func Test1500IsNotGrigorianYear(t *testing.T) {
+	b := isGrigorianYear(1500)
+	if b {
+		t.Error("1500 is not GrigorianYear")
+	}
+}
+
+func Test2021ValidtorInput(t *testing.T) {
+
+	var y int
+	input := func() int { return 2021 }
+	validator := func(year int) bool {
+		y = year
+		return true
+	}
+
+	_ = inputGrigorianYear(input, validator)
+	if y != 2021 {
+		t.Error("Validator shoud have an input 2021")
+	}
+}
